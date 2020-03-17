@@ -1,22 +1,18 @@
 package com.pricarvalho.model;
 
-import org.flywaydb.core.internal.jdbc.DriverDataSource;
-
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public enum Provider {
 
     MYSQL(3306, "jdbc:mysql://", "com.mysql.jdbc.Driver", "root", "root", "org.jooq.meta.mysql.MySQLDatabase"){
         @Override
-        public List<String> variables() {
+        public List<String> variables(String database) {
             List<String> defaultVariables = new ArrayList<>();
-            defaultVariables.add("MYSQL_DATABASE=jooq");
+            defaultVariables.add("MYSQL_DATABASE="+database);
             defaultVariables.add("MYSQL_ROOT_USER="+this.user());
             defaultVariables.add("MYSQL_ROOT_PASSWORD="+this.password());
-            defaultVariables.add("MYSQL_DATA=\"$HOME/.dbases/jooq\"");
+            defaultVariables.add("MYSQL_DATA=\"$HOME/.dbases/jooq/"+database+"\"");
             return defaultVariables;
         }
     };
@@ -45,7 +41,7 @@ public enum Provider {
         return urlPrefix;
     }
 
-    public abstract List<String> variables();
+    public abstract List<String> variables(String database);
 
     public String password() {
         return this.passaword;

@@ -9,7 +9,7 @@ import org.apache.maven.project.MavenProject;
 
 import static org.jooq.Constants.XSD_CODEGEN;
 
-@Mojo(name = "bla", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class Plugin extends AbstractMojo {
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
@@ -42,9 +42,4 @@ public class Plugin extends AbstractMojo {
 
         project.addCompileSourceRoot(this.generator.target().getDirectory());
     }
-
-
-
-
 }
-

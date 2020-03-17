@@ -18,10 +18,11 @@ public class DockerContainerUp {
     private boolean removeContainerOnComplete;
 
     public void kill() {
-        if(stopContainerOnComplete) {
+        if(removeContainerOnComplete) {
             client.stopContainerCmd(container.getId()).exec();
-            if(removeContainerOnComplete)
-                client.removeContainerCmd(container.getId()).exec();
+            client.removeContainerCmd(container.getId()).exec();
+        } else if(stopContainerOnComplete) {
+            client.stopContainerCmd(container.getId()).exec();
         }
     }
 

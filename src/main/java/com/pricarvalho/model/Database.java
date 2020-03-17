@@ -20,7 +20,7 @@ public class Database {
     private String[] scriptLocations;
 
     public String url() {
-        return this.provider.urlPrefix()+ "localhost:" + exposedPort() + "/jooq";
+        return this.provider.urlPrefix()+ "localhost:" + exposedPort() + "/" +this.name;
     }
 
     public int exposedPort() {
@@ -40,7 +40,7 @@ public class Database {
     }
 
     public List<String> environments() {
-        return this.provider.variables();
+        return this.provider.variables(name);
     }
 
     public String providerLabel() {
@@ -50,6 +50,8 @@ public class Database {
     public Flyway flyway() {
         return Flyway.configure().locations(flywayLocations())
                      .connectRetries(30)
+                     .defaultSchema(this.schema)
+                     .schemas(this.schema)
                      .dataSource(url(),
                                  user(),
                                  password()).load();
